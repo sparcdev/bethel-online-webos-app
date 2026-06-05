@@ -1,0 +1,131 @@
+/* ===== Login screen ===== */
+.login-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at top, rgba(149,110,82,0.25), transparent 60%),
+    #000;
+}
+.login-card {
+  width: 720px;
+  padding: 64px 72px;
+  background: rgba(20,20,22,0.85);
+  border-radius: 24px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  text-align: center;
+}
+.login-logo {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+  margin: 0 auto 24px;
+  display: block;
+}
+.login-title {
+  font-size: 36px;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+.login-sub {
+  font-size: 22px;
+  margin: 0 0 32px;
+  color: #b8b8b8;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+.login-label {
+  display: block;
+}
+.login-label > span {
+  display: block;
+  font-size: 18px;
+  color: #9aa;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.login-label input {
+  width: 100%;
+  padding: 18px 22px;
+  font-size: 26px;
+  background: #1f1f22;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.login-label input:focus {
+  border-color: rgba(255,255,255,0.65);
+  background: #25252a;
+}
+.login-error {
+  margin: 4px 0 0;
+  color: #ff7474;
+  font-size: 20px;
+  min-height: 28px;
+}
+.login-button {
+  margin-top: 16px;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: 500;
+  background: #fff;
+  color: #000;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.login-button:focus {
+  border-color: rgba(255,255,255,0.95);
+  background: #fff;
+  color: #000;
+  transform: scale(1.03);
+  outline: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* ===== Placeholder home (phase 1) ===== */
+.home-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px;
+}
+.home-logo {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  margin-bottom: 32px;
+}
+.home-title {
+  font-size: 56px;
+  font-weight: 300;
+  margin: 0 0 16px;
+}
+.home-sub {
+  font-size: 28px;
+  color: #d8d8d8;
+  margin: 0 0 32px;
+}
+.home-hint {
+  font-size: 20px;
+  color: #888;
+  margin: 0;
+}

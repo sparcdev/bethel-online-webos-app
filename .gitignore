@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Build artifacts
+build/*.ipk
+
+# Editor noise
+.vscode/
+.idea/
+*.swp
+
+# Node
+node_modules/
+
+# Claude artifacts
+.claude/

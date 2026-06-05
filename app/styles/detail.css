@@ -1,0 +1,155 @@
+/* ===== Detail screen ===== */
+.detail {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.detail::-webkit-scrollbar { display: none; }
+
+.detail-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 720px;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+.detail-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 720px;
+  background:
+    linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 35%, rgba(0,0,0,0) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0) 35%, rgba(0,0,0,1) 95%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.detail-content {
+  position: relative;
+  z-index: 3;
+  padding: 88px 64px 64px;
+  max-width: 1500px;
+}
+
+.detail-title {
+  font-size: 64px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  line-height: 1.1;
+}
+.detail-meta {
+  font-size: 22px;
+  color: #b8b8b8;
+  margin: 0 0 24px;
+  letter-spacing: 0.04em;
+}
+.detail-desc {
+  font-size: 22px;
+  line-height: 1.55;
+  color: #d8d8d8;
+  margin: 0 0 32px;
+  max-width: 1100px;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 56px;
+}
+
+.btn-primary {
+  background: rgba(255,255,255,0.92);
+  color: #000;
+  border: 3px solid transparent;
+  padding: 18px 42px;
+  font-size: 22px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+.btn-primary.is-focused {
+  background: #fff;
+  color: #000;
+  border-color: rgba(255,255,255,0.95);
+  transform: scale(1.04);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.45);
+}
+
+/* ===== Seasons ===== */
+.seasons-title {
+  font-size: 28px;
+  font-weight: 500;
+  margin: 0 0 16px;
+}
+.season-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.season-tab {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.75);
+  border: 2px solid transparent;
+  padding: 10px 22px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+.season-tab.is-active {
+  background: rgba(255,255,255,0.92);
+  color: #000;
+}
+.season-tab.is-focused {
+  border-color: rgba(255,255,255,0.85);
+  transform: scale(1.04);
+}
+
+/* ===== Episodes ===== */
+.episodes {
+  margin-top: 8px;
+}
+.episodes-loading,
+.episodes-empty {
+  color: #888;
+  padding: 40px 0;
+  font-size: 20px;
+}
+.episodes-track {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  padding: 12px 0;
+}
+.episodes-track .tile {
+  width: auto;
+}
+
+/* ===== Layout mode (Sermons archive etc.) ===== */
+.layout-rows {
+  margin-top: 24px;
+}
+.layout-rows .row {
+  margin: 0 -64px 32px;
+}
+.layout-rows .row-title {
+  margin-left: 64px;
+}
+.layout-rows .row-track {
+  padding-left: 64px;
+  padding-right: 64px;
+}

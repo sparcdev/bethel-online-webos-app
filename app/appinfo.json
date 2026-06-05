@@ -1,0 +1,21 @@
+{
+  "id": "nl.rubenlievense.bethelonline",
+  "version": "2.7.3",
+  "vendor": "Ruben Lievense",
+  "type": "web",
+  "main": "index.html",
+  "title": "Bethel ONLINE",
+  "icon": "icons/largeIcon.png",
+  "largeIcon": "icons/largeIcon.png",
+  "splashBackground": "icons/splash.png",
+  "iconColor": "#000000",
+  "bgColor": "#000000",
+  "transparent": false,
+  "disableBackHistoryAPI": true,
+  "supportTouchMode": "none",
+  "handlesRelaunch": true,
+  "uiRevision": 2,
+  "requiredPermissions": [
+    "internet"
+  ]
+}

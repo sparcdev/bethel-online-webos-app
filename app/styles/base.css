@@ -1,0 +1,108 @@
+/* ===== Base / Reset ===== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+  font-family: "LG Display", -webkit-system-font, "Helvetica Neue", Arial, sans-serif;
+  font-size: 24px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+input  { font: inherit; }
+img    { user-select: none; -webkit-user-drag: none; }
+
+#app {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hidden { display: none !important; }
+
+/* ===== Splash (HTML, behind the OS splash) ===== */
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease-out;
+}
+#splash.hidden { opacity: 0; pointer-events: none; }
+#splash img {
+  width: 240px;
+  height: 240px;
+  object-fit: contain;
+}
+#splash .spinner {
+  width: 56px;
+  height: 56px;
+  margin-top: 48px;
+  border: 4px solid rgba(255,255,255,0.15);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== Focus ring (used by spatial nav engine in phase 2) ===== */
+.is-focused {
+  outline: 4px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ===== Exit dialog (shared) ===== */
+#exit-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dialog-card {
+  background: #1a1a1a;
+  border-radius: 16px;
+  padding: 56px 72px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  min-width: 560px;
+}
+.dialog-title {
+  font-size: 36px;
+  font-weight: 500;
+  margin: 0 0 40px;
+}
+.dialog-buttons {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+.dialog-btn {
+  background: #2a2a2a;
+  color: #fff;
+  border: 3px solid transparent;
+  padding: 20px 36px;
+  font-size: 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  min-width: 200px;
+  transition: all 0.15s ease;
+}
+.dialog-btn.focus {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+  transform: scale(1.04);
+}
