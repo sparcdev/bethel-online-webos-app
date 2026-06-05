@@ -126,7 +126,6 @@ ares-launch --device <your-device> nl.rubenlievense.bethelonline
 
 - **Bethel Media** for the content. Subscribe at [bethel.online](https://www.bethel.online/).
 - **Streann Media** for the underlying VOD platform.
-- App built with [Claude Code](https://claude.com/claude-code).
 
 ## License
 
