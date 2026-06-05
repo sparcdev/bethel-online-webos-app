@@ -23,7 +23,29 @@ function localizedName(infos, fallback) {
 }
 function pickHero(vodOrItem) {
   if (!vodOrItem) return null;
-  return vodOrItem.backgroundImage || vodOrItem.posterImage || vodOrItem.image || null;
+  const url = vodOrItem.backgroundImage || vodOrItem.posterImage || vodOrItem.image || null;
+  if (!url || typeof url !== 'string') return url;
+  if (!/img\.streann\.(com|tech)/.test(url)) return url;
+  if (/[?&]auto=webp/.test(url)) return url;
+  const sep = url.indexOf('?') === -1 ? '?' : '&';
+  return `${url}${sep}quality=80&width=1280&auto=webp&fit=bounds&optimize=high`;
+}
+
+// Set a backdrop image with a smooth fade — preloads off-DOM first so the
+// transition only kicks off once the bytes are actually ready to paint.
+function setBackdrop(el, url) {
+  if (!el || !url) return;
+  // Skip if same image already applied
+  if (el.dataset.bg === url) return;
+  const probe = new Image();
+  probe.decoding = 'async';
+  probe.onload = () => {
+    el.style.backgroundImage = `url("${url}")`;
+    el.dataset.bg = url;
+    requestAnimationFrame(() => el.classList.add('is-loaded'));
+  };
+  probe.onerror = () => {};
+  probe.src = url;
 }
 function formatDuration(s) {
   if (!s || isNaN(s)) return '';
@@ -112,7 +134,7 @@ function renderLayoutMode(root, originalItem, layout, cleanup) {
       </div>
     </div>
   `;
-  if (heroBg) root.querySelector('#backdrop').style.backgroundImage = `url("${heroBg}")`;
+  if (heroBg) setBackdrop(root.querySelector('#backdrop'), heroBg);
 
   const rowsEl = root.querySelector('#layout-rows');
   const metaEl = root.querySelector('#d-meta');
@@ -193,7 +215,7 @@ async function renderVodMode(root, originalItem, cleanup) {
       : (originalItem.name || localizedName(originalItem.infos));
   titleEl.textContent = tentTitle || '';
   const tentBg = pickHero(originalItem);
-  if (tentBg) backdrop.style.backgroundImage = `url("${tentBg}")`;
+  if (tentBg) setBackdrop(backdrop, tentBg);
 
   const userId = (getState().user && (getState().user.id || getState().user._id)) || '';
   let detail;
@@ -213,7 +235,7 @@ async function renderVodMode(root, originalItem, cleanup) {
   titleEl.textContent = heroName;
 
   const heroBg = pickHero(vod) || tentBg;
-  if (heroBg) backdrop.style.backgroundImage = `url("${heroBg}")`;
+  if (heroBg) setBackdrop(backdrop, heroBg);
 
   const metaParts = [];
   if (vod.releasedYear) metaParts.push(vod.releasedYear);

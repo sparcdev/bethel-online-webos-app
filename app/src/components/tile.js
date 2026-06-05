@@ -23,6 +23,18 @@ function pickImage(item) {
   return null;
 }
 
+// Streann's image hosts (img.streann.com / img.streann.tech) accept URL
+// transform params: ?quality=80&width=W&auto=webp&fit=bounds&optimize=high.
+// Adding this can shrink images 3-5× and speed up decode considerably.
+function optimizeImageUrl(url, width) {
+  if (!url || typeof url !== 'string') return url;
+  if (!/img\.streann\.(com|tech)/.test(url)) return url;
+  // Don't double-apply
+  if (/[?&]auto=webp/.test(url)) return url;
+  const sep = url.indexOf('?') === -1 ? '?' : '&';
+  return `${url}${sep}quality=80&width=${width}&auto=webp&fit=bounds&optimize=high`;
+}
+
 function pickTitle(item) {
   if (!item) return '';
   // Prefer series name when this item is part of a series — matches bethel.online's
@@ -100,8 +112,9 @@ export function createTile(item, onActivate, opts = {}) {
   el.setAttribute('data-focusable', '');
   el.setAttribute('data-id', item.id || item.vodId || item.channelId || '');
 
-  const img   = pickImage(item);
-  const live  = isChannel(item);
+  const rawImg = pickImage(item);
+  const img    = optimizeImageUrl(rawImg, 400);
+  const live   = isChannel(item);
   // Episode tiles always use the per-episode name, never the series name.
   const title = (variant === 'episode')
     ? (
@@ -113,12 +126,23 @@ export function createTile(item, onActivate, opts = {}) {
 
   el.innerHTML = `
     <div class="tile-art">
-      ${img ? `<img src="${img}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<div class="tile-art-fallback"></div>`}
+      ${img ? `<img src="${img}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="400" height="225">` : `<div class="tile-art-fallback"></div>`}
       ${live ? `<span class="tile-live-badge">LIVE</span>` : ''}
     </div>
     <div class="tile-title" title="${title.replace(/"/g, '&quot;')}">${title}</div>
     ${meta ? `<div class="tile-meta">${meta}</div>` : ''}
   `;
+
+  // Smooth fade-in once each image has actually finished decoding
+  const imgEl = el.querySelector('img');
+  if (imgEl) {
+    if (imgEl.complete && imgEl.naturalWidth > 0) {
+      imgEl.classList.add('is-loaded');
+    } else {
+      imgEl.addEventListener('load', () => imgEl.classList.add('is-loaded'), { once: true });
+      imgEl.addEventListener('error', () => imgEl.remove(), { once: true });
+    }
+  }
 
   el.addEventListener('rc:activate', () => onActivate && onActivate(item, el));
   el.addEventListener('click',       () => onActivate && onActivate(item, el));

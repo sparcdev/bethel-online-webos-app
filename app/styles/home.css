@@ -73,6 +73,9 @@
   overflow-y: visible;
   scroll-behavior: smooth;
   scrollbar-width: none;
+  /* GPU compositing layer for smoother horizontal scroll on TV */
+  will-change: scroll-position;
+  transform: translateZ(0);
 }
 .row-track::-webkit-scrollbar { display: none; }
 .row-empty {
@@ -92,6 +95,11 @@
   text-align: left;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
   outline: none;
+  /* Paint isolation + skip layout/paint for off-screen tiles → smoother
+   * horizontal scrolling and image loading on TV. */
+  contain: layout paint;
+  content-visibility: auto;
+  contain-intrinsic-size: 280px 240px;
 }
 .tile.is-focused {
   transform: scale(1.06);
@@ -101,7 +109,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: #1a1a1a;
+  background: linear-gradient(135deg, #1c1c20 0%, #141418 100%);
   border-radius: 10px;
   overflow: hidden;
   border: 3px solid transparent;
@@ -116,6 +124,14 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  /* Fade in gracefully once the image has decoded */
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 0.45s ease, transform 0.6s ease;
+}
+.tile-art img.is-loaded {
+  opacity: 1;
+  transform: scale(1);
 }
 .tile-art-fallback {
   width: 100%;
